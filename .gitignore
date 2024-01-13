@@ -13,4 +13,6 @@ libtool
 misc/
 stamp-h1
 
+*.msi
 .build/
+.deps/

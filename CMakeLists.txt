@@ -2,15 +2,14 @@ cmake_minimum_required(VERSION 3.24)
 
 project(gstpeaq C)
 
-execute_process(
-    COMMAND conan install -if conan -g cmake_find_package --build=missing --settings=build_type=Debug ${CMAKE_CURRENT_SOURCE_DIR}/conanfile.txt
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-)
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR}/conan)
-find_package(glib REQUIRED)
-find_package(gst-plugins-base REQUIRED)
-
 include(bootstrap.cmake)
+
+set(GST_SDK_PATH ${CMAKE_CURRENT_SOURCE_DIR}/.deps/gstreamer/1.0/msvc_x86_64)
+include_directories(${GST_SDK_PATH}/include/gstreamer-1.0)
+include_directories(${GST_SDK_PATH}/include/glib-2.0)
+include_directories(${GST_SDK_PATH}/lib/glib-2.0/include)
+link_directories(${GST_SDK_PATH}/lib)
+link_libraries(glib-2.0.lib gobject-2.0.lib gstreamer-1.0.lib gstbase-1.0.lib gstfft-1.0.lib)
 
 add_library(gstpeaq SHARED
     src/earmodel.c
@@ -45,10 +44,4 @@ add_compile_definitions(
     VERSION="0.6.1"
 )
 
-target_link_libraries(gstpeaq PUBLIC glib::glib gst-plugins-base::gstreamer-fft-1.0 gst-plugins-base::gstadder)
-
 add_executable(peaq src/peaq.c)
-target_link_libraries(peaq PRIVATE glib::glib gst-plugins-base::gstapp)
-
-add_executable(testpeaq src/testpeaq.c)
-target_link_libraries(testpeaq PRIVATE gstpeaq)
