@@ -24,7 +24,7 @@
 #define __FBEARMODEL_H__ 1
 
 #include <glib-object.h>
-#include <earmodel.h>
+#include "earmodel.h"
 
 #define PEAQ_TYPE_FILTERBANKEARMODEL \
   (peaq_filterbankearmodel_get_type ())

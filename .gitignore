@@ -12,3 +12,5 @@ gtk-doc.make
 libtool
 misc/
 stamp-h1
+
+.build/

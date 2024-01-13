@@ -1,0 +1,4 @@
+[requires]
+glib/2.76.3
+gst-plugins-base/1.19.2
+zlib/1.2.13
